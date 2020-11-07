@@ -22,8 +22,18 @@ const Search = () => {
             setResult(data.query.search);
         };
 
-        if (term) {
+        if (term && !result.length) {
             searchAPI();
+        } else {
+            const timeoutId = setTimeout(() => {
+                if (term) {
+                    searchAPI();
+                }
+            }, 500);
+
+            return () => {
+                clearTimeout(timeoutId);
+            };
         }
         /*axios.get('adadas') Utilizando async await con axios y promesas
             .then((response) => {
